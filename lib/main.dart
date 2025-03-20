@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            Image.network('https://picsum.photos/200'),
+            Image.asset('assets/images/lunette4.png'),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
