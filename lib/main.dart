@@ -10,11 +10,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       home: Scaffold(
-        appBar: AppBar(title: Text('Hello Flutter')),
-        body: Center(
-          child: Text('Bienvenue en Flutter !', style: TextStyle(fontSize: 33)),
+        appBar: AppBar(title: Text('Widgets de base')),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Hello Flutter!',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Image.network('https://picsum.photos/200'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                print('Button pressé');
+              },
+              child: Text('Clique moi'),
+            ),
+          ],
         ),
       ),
     );
