@@ -9,24 +9,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Widgets de base')),
-        body: Column(
+    return MaterialApp(home: CounterScreen());
+  }
+}
+
+// Definition d'un StatefulWidget
+
+class CounterScreen extends StatefulWidget {
+  const CounterScreen({super.key});
+
+  @override
+  State<CounterScreen> createState() => _CounterScreenState();
+}
+
+class _CounterScreenState extends State<CounterScreen> {
+  int _counter = 0;
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('StatefulWidget - Computer')),
+      body: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Hello Flutter!',
+              'Compteur: $_counter',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            Image.asset('assets/images/lunette4.png'),
-            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                print('Button pressé');
-              },
-              child: Text('Clique moi'),
+              onPressed: _incrementCounter,
+              child: Text('Incrément'),
             ),
           ],
         ),
