@@ -9,45 +9,51 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: NameInputScreen());
+    return MaterialApp(home: WidgetPracticeScreen());
   }
 }
 
-class NameInputScreen extends StatefulWidget {
-  const NameInputScreen({super.key});
-
-  @override
-  State<NameInputScreen> createState() => _NameInputScreenState();
-}
-
-class _NameInputScreenState extends State<NameInputScreen> {
-  String _name = "";
-  void _updateName(String value) {
-    setState(() {
-      _name = value;
-    });
-  }
+class WidgetPracticeScreen extends StatelessWidget {
+  const WidgetPracticeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Saisie du text')),
+      appBar: AppBar(title: Text('Exercice de Widgets')),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0), // Ajoute un espace autour du contenu
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center, // Centre verticalement
           children: [
-            Text(
-              _name.isEmpty ? "Entrez votre nom" : "Bonjour, $_name !",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              onChanged: _updateName,
-              decoration: InputDecoration(
-                labelText: "Votre nom",
-                border: OutlineInputBorder(),
+            Center(
+              child: Text(
+                "Bienvenue !",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
+            ),
+
+            SizedBox(height: 30), // Ajoute un espace
+            // Trois boutons empilés verticalement
+            Column(
+              children: [
+                ElevatedButton(onPressed: () {}, child: Text("Bouton 1")),
+                SizedBox(height: 10), // Espace entre les boutons
+                ElevatedButton(onPressed: () {}, child: Text("Bouton 2")),
+                SizedBox(height: 10),
+                ElevatedButton(onPressed: () {}, child: Text("Bouton 3")),
+              ],
+            ),
+
+            SizedBox(height: 50), // Ajoute un espace avant les icônes
+            // Trois icônes alignées horizontalement
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceEvenly, // Espacement égal
+              children: [
+                Icon(Icons.home, size: 40, color: Colors.blue),
+                Icon(Icons.favorite, size: 40, color: Colors.red),
+                Icon(Icons.settings, size: 40, color: Colors.green),
+              ],
             ),
           ],
         ),
