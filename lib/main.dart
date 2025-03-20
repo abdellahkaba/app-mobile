@@ -39,7 +39,9 @@ class _CounterScreenState extends State<CounterScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Compteur: $_counter',
+              _counter > 5
+                  ? '🔥 Wow, tu as cliqué plus de 5 fois !'
+                  : 'Compteur: $_counter',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
