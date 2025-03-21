@@ -9,63 +9,112 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: UserListScreen(),
+    );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class UserListScreen extends StatefulWidget {
+  const UserListScreen({super.key});
+
+  @override
+  State<UserListScreen> createState() => _UserListScreenState();
+}
+
+class _UserListScreenState extends State<UserListScreen> {
+  List<String> users = ["Alice", "Kaba", "Musa", "Jean"];
+
+  final TextEditingController _controller = TextEditingController();
+
+  void _addUser() {
+    if (_controller.text.isNotEmpty) {
+      setState(() {
+        users.add(_controller.text);
+        _controller.clear();
+      });
+    }
+  }
+
+  void _deleteUser(int index) {
+    setState(() {
+      users.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Acceuil')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder:
-                    (context) => DetailScreen(
-                      message: "Bonjour depuis l'ecran principal",
-                    ),
+      appBar: AppBar(title: Text("Liste des utilisateurs")),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Champ pour ajouter un utilisateur
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(
+                labelText: "Nom de l'utilisateur",
+                suffixIcon: IconButton(
+                  onPressed: _addUser,
+                  icon: Icon(Icons.add),
+                ),
               ),
-            );
-          },
-          child: Text("Aller a l'ecran detail"),
+            ),
+            SizedBox(height: 20),
+
+            // Liste des utilisateurs
+            Expanded(
+              child: ListView.builder(
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(users[index]),
+                      leading: Icon(Icons.person),
+                      trailing: IconButton(
+                        onPressed: () => _deleteUser(index),
+                        icon: Icon(Icons.delete, color: Colors.red),
+                      ),
+                      onTap: () {
+                        // Navigation vers l'ecran de detail
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    UserDetailScreen(userName: users[index]),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class DetailScreen extends StatelessWidget {
-  final String message;
+// Ecran de detail
 
-  const DetailScreen({super.key, required this.message});
+class UserDetailScreen extends StatelessWidget {
+  const UserDetailScreen({super.key, required this.userName});
+
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Écran Détails')),
+      appBar: AppBar(title: Text('Detail Utilisateurs')),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              message, // Affiche le message reçu
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context); // Retour à l'écran précédent
-              },
-              child: Text("Retour à l'Accueil"),
-            ),
-          ],
+        child: Text(
+          "Bienvenue, $userName !",
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
     );
